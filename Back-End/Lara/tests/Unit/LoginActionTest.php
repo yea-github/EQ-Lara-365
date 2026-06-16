@@ -24,7 +24,7 @@ class LoginActionTest extends TestCase
         $user->Id = 15;
 
         $jwtFactory = Mockery::mock();
-        $jwtFactory->shouldReceive('getTTL')->once()->andReturn(60);
+        $jwtFactory->shouldReceive('getTTL')->once()->andReturn(10080);
 
         $guard = Mockery::mock();
         $guard
@@ -47,7 +47,7 @@ class LoginActionTest extends TestCase
 
         $this->assertSame('jwt-token', $response['access_token']);
         $this->assertSame('Bearer', $response['token_type']);
-        $this->assertSame(3600, $response['expires_in']);
+        $this->assertSame(604800, $response['expires_in']);
         $this->assertSame('mary_jackson', $response['user']['user_name']);
         $this->assertArrayNotHasKey('password', $response['user']);
     }

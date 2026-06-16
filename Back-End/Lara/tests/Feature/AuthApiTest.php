@@ -46,7 +46,7 @@ class AuthApiTest extends TestCase
             ->assertCreated()
             ->assertJsonStructure($this->tokenResponseStructure())
             ->assertJsonPath('token_type', 'Bearer')
-            ->assertJsonPath('expires_in', 3600)
+            ->assertJsonPath('expires_in', 604800)
             ->assertJsonPath('user.first_name', 'Ada')
             ->assertJsonPath('user.last_name', 'Lovelace')
             ->assertJsonPath('user.user_name', 'ada_lovelace')
@@ -225,7 +225,7 @@ class AuthApiTest extends TestCase
         return [
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_in' => 3600,
+            'expires_in' => 604800,
             'user' => $user,
         ];
     }
