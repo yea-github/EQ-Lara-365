@@ -4,6 +4,10 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DailySummeryController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\HrOverviewController;
+use App\Http\Controllers\Api\InventorySummeryController;
+use App\Http\Controllers\Api\ProjectOverviewController;
+use App\Http\Controllers\Api\SalesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +31,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/get-all-employees', [EmployeeController::class, 'getAllEmployees']);
     Route::get('/get-customer-by-sales', [CustomerController::class, 'getCustomerBySales']);
     Route::get('/get-daily-summery', [DailySummeryController::class, 'getDailySummery']);
+    Route::get('/get-hr-overview', [HrOverviewController::class, 'getHrOverview']);
+    Route::get('/get-inventory-summery', [InventorySummeryController::class, 'getInventorySummery']);
+    Route::get('/get-project-overview', [ProjectOverviewController::class, 'getProjectOverview']);
+    Route::get('/sales-by-category', [SalesController::class, 'salesByCategory']);
 });
