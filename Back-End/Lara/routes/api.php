@@ -23,6 +23,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::get('/pub/get-all-employees', [EmployeeController::class, 'getAllEmployees']);
+Route::get('/pub/get-customer-by-sales', [CustomerController::class, 'getCustomerBySales']);
+Route::get('/pub/get-daily-summery', [DailySummeryController::class, 'getDailySummery']);
+Route::get('/pub/get-hr-overview', [HrOverviewController::class, 'getHrOverview']);
+Route::get('/pub/get-inventory-summery', [InventorySummeryController::class, 'getInventorySummery']);
+Route::get('/pub/get-project-overview', [ProjectOverviewController::class, 'getProjectOverview']);
+Route::get('/pub/sales-by-category', [SalesController::class, 'salesByCategory']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
