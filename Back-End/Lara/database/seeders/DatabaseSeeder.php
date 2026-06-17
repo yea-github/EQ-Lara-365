@@ -306,6 +306,90 @@ class DatabaseSeeder extends Seeder
             );
         });
 
+        $projectOverviewRows = collect([
+            ['year' => 2020, 'month' => 'January', 'in_progress' => 8, 'completed' => 6, 'on_hold' => 3, 'not_started' => 11],
+        ]);
+
+        foreach (range(2020, 2026) as $year) {
+            foreach ($months as $index => $month) {
+                if ($year === 2020 && $index === 0) {
+                    continue;
+                }
+
+                if ($year === 2026 && $index > 4) {
+                    break;
+                }
+
+                $periodNumber = (($year - 2020) * 12) + $index + 1;
+
+                $projectOverviewRows->push([
+                    'year' => $year,
+                    'month' => $month,
+                    'in_progress' => 8 + ($periodNumber % 7),
+                    'completed' => 6 + (int) floor($periodNumber / 2) + ($index % 4),
+                    'on_hold' => 2 + (($periodNumber + $index) % 5),
+                    'not_started' => max(1, 11 + (($index + 2) % 6) - (int) floor($periodNumber / 10)),
+                ]);
+            }
+        }
+
+        $projectOverviewRows->each(function (array $projectOverview): void {
+            DB::table('Project_Overview')->updateOrInsert(
+                [
+                    'year' => $projectOverview['year'],
+                    'month' => $projectOverview['month'],
+                ],
+                [
+                    'in_progress' => $projectOverview['in_progress'],
+                    'completed' => $projectOverview['completed'],
+                    'on_hold' => $projectOverview['on_hold'],
+                    'not_started' => $projectOverview['not_started'],
+                ]
+            );
+        });
+
+        $hrOverviewRows = collect([
+            ['year' => 2020, 'month' => 'January', 'total_employees' => 356, 'new_joines' => 22, 'on_leave' => 18, 'open_positions' => 12],
+        ]);
+
+        foreach (range(2020, 2026) as $year) {
+            foreach ($months as $index => $month) {
+                if ($year === 2020 && $index === 0) {
+                    continue;
+                }
+
+                if ($year === 2026 && $index > 4) {
+                    break;
+                }
+
+                $periodNumber = (($year - 2020) * 12) + $index + 1;
+
+                $hrOverviewRows->push([
+                    'year' => $year,
+                    'month' => $month,
+                    'total_employees' => 356 + ($periodNumber * 3) + (int) floor($periodNumber / 4),
+                    'new_joines' => 18 + (($periodNumber + $index) % 12),
+                    'on_leave' => 12 + (($periodNumber + ($index * 2)) % 10),
+                    'open_positions' => max(1, 12 + (($index + 3) % 8) - (int) floor($periodNumber / 14)),
+                ]);
+            }
+        }
+
+        $hrOverviewRows->each(function (array $hrOverview): void {
+            DB::table('HR_Overview')->updateOrInsert(
+                [
+                    'year' => $hrOverview['year'],
+                    'month' => $hrOverview['month'],
+                ],
+                [
+                    'total_employees' => $hrOverview['total_employees'],
+                    'new_joines' => $hrOverview['new_joines'],
+                    'on_leave' => $hrOverview['on_leave'],
+                    'open_positions' => $hrOverview['open_positions'],
+                ]
+            );
+        });
+
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
