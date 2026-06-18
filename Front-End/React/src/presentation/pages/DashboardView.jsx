@@ -1,5 +1,7 @@
 import React from 'react'
 import DashboardSummaryCardsRow from '../components/dashboard/DashboardSummaryCardsRow.jsx'
+import RevenueOverviewChart from '../components/revenueOverview/RevenueOverviewChart.jsx'
+import SalesByCategoryChart from '../components/salesByCategory/SalesByCategoryChart.jsx'
 
 class DashboardView extends React.Component {
   render() {
@@ -9,6 +11,10 @@ class DashboardView extends React.Component {
           Dashboard
         </h1>
         <DashboardSummaryCardsRow />
+        <div className="dashboard-secondary-row">
+          <RevenueOverviewChart />
+          <SalesByCategoryChart />
+        </div>
       </section>
     )
   }

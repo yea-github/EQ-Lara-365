@@ -186,7 +186,7 @@ button {
 }
 
 .dashboard-page {
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto auto 1fr;
   gap: 22px;
 }
 
@@ -194,6 +194,14 @@ button {
   display: grid;
   grid-template-columns: repeat(5, minmax(210px, 1fr));
   gap: 14px;
+  width: 100%;
+}
+
+.dashboard-secondary-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(360px, 0.95fr);
+  gap: 18px;
+  align-items: stretch;
   width: 100%;
 }
 
@@ -346,6 +354,202 @@ button {
   padding-top: 56px;
 }
 
+.revenue-overview-card {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #e4e9f2;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(31, 45, 71, 0.07);
+  padding: 22px;
+}
+
+.revenue-overview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.revenue-overview-header h2 {
+  margin: 0;
+  color: #152441;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.revenue-year-select {
+  display: grid;
+  grid-template-columns: auto minmax(104px, 132px);
+  align-items: center;
+  gap: 8px;
+}
+
+.revenue-year-select span {
+  color: #66728a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sales-category-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: 100%;
+  min-width: 0;
+  min-height: 398px;
+  border: 1px solid #e4e9f2;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(31, 45, 71, 0.07);
+  padding: 22px;
+}
+
+.sales-category-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.sales-category-header h2 {
+  margin: 0;
+  color: #152441;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.sales-category-filters {
+  display: grid;
+  grid-template-columns: minmax(88px, 104px) minmax(104px, 132px);
+  gap: 8px;
+}
+
+.sales-category-filters label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.sales-category-filters span {
+  color: #66728a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sales-category-filters select {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid #d8e0ec;
+  border-radius: 7px;
+  background: #f9fbfe;
+  color: #1d2a42;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0 8px;
+}
+
+.sales-category-content {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.86fr) minmax(170px, 1fr);
+  align-items: center;
+  gap: 18px;
+  min-height: 290px;
+}
+
+.sales-category-chart {
+  position: relative;
+  min-height: 240px;
+}
+
+.sales-category-chart .p-chart {
+  min-height: 240px;
+}
+
+.sales-category-legend {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sales-category-legend li {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+}
+
+.sales-category-dot {
+  width: 10px;
+  height: 10px;
+  margin-top: 3px;
+  border-radius: 999px;
+}
+
+.sales-category-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sales-category-text strong {
+  color: #172542;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.sales-category-text span {
+  color: #60708b;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.sales-category-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 290px;
+  color: #52627d;
+  font-weight: 700;
+}
+
+.revenue-year-select select {
+  min-height: 36px;
+  border: 1px solid #d8e0ec;
+  border-radius: 7px;
+  background: #f9fbfe;
+  color: #1d2a42;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0 10px;
+}
+
+.revenue-chart-body {
+  position: relative;
+  width: 100%;
+  min-height: 350px;
+}
+
+.revenue-chart-body .p-chart {
+  min-height: 350px;
+}
+
+.revenue-chart-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  color: #52627d;
+  font-weight: 700;
+}
+
 .under-construction {
   margin: 0;
   color: #263552;
@@ -423,6 +627,47 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .dashboard-secondary-row {
+    grid-template-columns: 1fr;
+  }
+
+  .revenue-overview-card,
+  .sales-category-card {
+    padding: 16px;
+  }
+
+  .revenue-overview-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .revenue-year-select {
+    grid-template-columns: 1fr;
+  }
+
+  .sales-category-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sales-category-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sales-category-content {
+    grid-template-columns: 1fr;
+  }
+
+  .revenue-chart-body,
+  .revenue-chart-body .p-chart {
+    min-height: 350px;
+  }
+
+  .sales-category-chart,
+  .sales-category-chart .p-chart {
+    min-height: 230px;
+  }
+
   .page-title {
     font-size: 26px;
   }
@@ -436,6 +681,10 @@ button {
 @media (min-width: 721px) and (max-width: 1180px) {
   .dashboard-summary-row {
     grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+
+  .dashboard-secondary-row {
+    grid-template-columns: 1fr;
   }
 }
 

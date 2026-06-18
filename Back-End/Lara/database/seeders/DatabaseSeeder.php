@@ -390,6 +390,29 @@ class DatabaseSeeder extends Seeder
             );
         });
 
+        foreach (range(2020, 2026) as $year) {
+            foreach ($months as $index => $month) {
+                if ($year === 2026 && $index > 4) {
+                    break;
+                }
+
+                $periodNumber = (($year - 2020) * 12) + $index + 1;
+                $revenue = round(1 + (($periodNumber * 0.47) + (($index + 1) * 0.31)) % 9, 2);
+                $expenses = round(max(1, min(10, $revenue - 0.5 - (($periodNumber + $index) % 4 * 0.18))), 2);
+
+                DB::table('Revenue_Overview')->updateOrInsert(
+                    [
+                        'Year' => $year,
+                        'Month' => $month,
+                    ],
+                    [
+                        'Revenue' => $revenue,
+                        'Expenses' => $expenses,
+                    ]
+                );
+            }
+        }
+
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
