@@ -16,7 +16,7 @@ class BaseMenuItem extends React.Component {
         aria-current={active ? 'page' : undefined}
       >
         <span className="nav-item-icon" aria-hidden="true">
-          {entry.icon}
+          <i className={`bx ${entry.icon}`} />
         </span>
         <span className="nav-item-label">{entry.label}</span>
       </button>
