@@ -399,7 +399,7 @@ button {
 }
 
 .employee-table-card {
-  min-height: 620px;
+  min-height: 0;
 }
 
 .revenue-overview-header {
@@ -939,11 +939,12 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 14px 0 0;
+  gap: 8px;
+  padding: 6px 0 0;
 }
 
 .employee-table-card .p-paginator button {
+  margin: 0 2px;
   min-width: 34px;
   height: 34px;
   border: 1px solid #d8e0ec;
