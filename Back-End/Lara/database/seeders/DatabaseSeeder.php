@@ -17,15 +17,48 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::query()->updateOrCreate(
-            ['user_name' => 'john-123'],
-            [
-                'first_name' => 'John',
-                'last_name' => 'Baptist',
-                'privilege' => 'user',
-                'password' => Hash::make('123456'),
-            ]
-        );
+        collect([
+            ['first_name' => 'John', 'last_name' => 'Baptist', 'user_name' => 'john-123', 'roles' => 'User'],
+            ['first_name' => 'Ada', 'last_name' => 'Lovelace', 'user_name' => 'ada-124', 'roles' => 'Super Admin'],
+            ['first_name' => 'Alan', 'last_name' => 'Turing', 'user_name' => 'alan-125', 'roles' => 'Admin'],
+            ['first_name' => 'Grace', 'last_name' => 'Hopper', 'user_name' => 'grace-126', 'roles' => 'User Modified'],
+            ['first_name' => 'Katherine', 'last_name' => 'Johnson', 'user_name' => 'katherine-127', 'roles' => 'User'],
+            ['first_name' => 'Dorothy', 'last_name' => 'Vaughan', 'user_name' => 'dorothy-128', 'roles' => 'Admin'],
+            ['first_name' => 'Mary', 'last_name' => 'Jackson', 'user_name' => 'mary-129', 'roles' => 'User'],
+            ['first_name' => 'Margaret', 'last_name' => 'Hamilton', 'user_name' => 'margaret-130', 'roles' => 'Super Admin'],
+            ['first_name' => 'Hedy', 'last_name' => 'Lamarr', 'user_name' => 'hedy-131', 'roles' => 'User Modified'],
+            ['first_name' => 'Radia', 'last_name' => 'Perlman', 'user_name' => 'radia-132', 'roles' => 'User'],
+            ['first_name' => 'Barbara', 'last_name' => 'Liskov', 'user_name' => 'barbara-133', 'roles' => 'Admin'],
+            ['first_name' => 'Frances', 'last_name' => 'Allen', 'user_name' => 'frances-134', 'roles' => 'User'],
+            ['first_name' => 'Anita', 'last_name' => 'Borg', 'user_name' => 'anita-135', 'roles' => 'User Modified'],
+            ['first_name' => 'Tim', 'last_name' => 'Berners', 'user_name' => 'tim-136', 'roles' => 'Super Admin'],
+            ['first_name' => 'Linus', 'last_name' => 'Torvalds', 'user_name' => 'linus-137', 'roles' => 'Admin'],
+            ['first_name' => 'Dennis', 'last_name' => 'Ritchie', 'user_name' => 'dennis-138', 'roles' => 'User'],
+            ['first_name' => 'Ken', 'last_name' => 'Thompson', 'user_name' => 'ken-139', 'roles' => 'Admin'],
+            ['first_name' => 'Donald', 'last_name' => 'Knuth', 'user_name' => 'donald-140', 'roles' => 'Super Admin'],
+            ['first_name' => 'Edsger', 'last_name' => 'Dijkstra', 'user_name' => 'edsger-141', 'roles' => 'User Modified'],
+            ['first_name' => 'Guido', 'last_name' => 'Rossum', 'user_name' => 'guido-142', 'roles' => 'User'],
+            ['first_name' => 'James', 'last_name' => 'Gosling', 'user_name' => 'james-143', 'roles' => 'Admin'],
+            ['first_name' => 'Brendan', 'last_name' => 'Eich', 'user_name' => 'brendan-144', 'roles' => 'User'],
+            ['first_name' => 'Bjarne', 'last_name' => 'Stroustrup', 'user_name' => 'bjarne-145', 'roles' => 'User Modified'],
+            ['first_name' => 'Martin', 'last_name' => 'Fowler', 'user_name' => 'martin-146', 'roles' => 'Admin'],
+            ['first_name' => 'Kent', 'last_name' => 'Beck', 'user_name' => 'kent-147', 'roles' => 'User'],
+            ['first_name' => 'Robert', 'last_name' => 'Martin', 'user_name' => 'robert-148', 'roles' => 'Super Admin'],
+            ['first_name' => 'Sandi', 'last_name' => 'Metz', 'user_name' => 'sandi-149', 'roles' => 'User'],
+            ['first_name' => 'Rebecca', 'last_name' => 'Wirfs', 'user_name' => 'rebecca-150', 'roles' => 'Admin'],
+            ['first_name' => 'Erich', 'last_name' => 'Gamma', 'user_name' => 'erich-151', 'roles' => 'User Modified'],
+            ['first_name' => 'Ward', 'last_name' => 'Cunningham', 'user_name' => 'ward-152', 'roles' => 'User'],
+        ])->each(function (array $user): void {
+            User::query()->updateOrCreate(
+                ['user_name' => $user['user_name']],
+                [
+                    'first_name' => $user['first_name'],
+                    'last_name' => $user['last_name'],
+                    'roles' => $user['roles'],
+                    'password' => Hash::make('123456'),
+                ]
+            );
+        });
 
         collect([
             ['first_name' => 'Gillian', 'last_name' => 'Anderson', 'date_of_birth' => '1985-01-07', 'birth_place' => 'Frankfurt', 'salary_per_month' => 5000, 'start_date' => '2015-03-23', 'department' => 'Software Development', 'skills' => 'PHP, Angular, ReactJS, JavaScript, TypeScript', 'remark' => 'Working for Accounting Software'],

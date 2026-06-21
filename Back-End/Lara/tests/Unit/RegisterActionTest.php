@@ -14,13 +14,13 @@ class RegisterActionTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    public function test_it_creates_a_user_with_hashed_password_and_default_privilege(): void
+    public function test_it_creates_a_user_with_hashed_password_and_default_roles(): void
     {
         $user = new User([
             'first_name' => 'Dorothy',
             'last_name' => 'Vaughan',
             'user_name' => 'dorothy_vaughan',
-            'privilege' => 'user',
+            'roles' => 'User',
             'password' => Hash::make('password123'),
         ]);
         $user->Id = 42;
@@ -33,7 +33,7 @@ class RegisterActionTest extends TestCase
                 return $attributes['first_name'] === 'Dorothy'
                     && $attributes['last_name'] === 'Vaughan'
                     && $attributes['user_name'] === 'dorothy_vaughan'
-                    && $attributes['privilege'] === 'user'
+                    && $attributes['roles'] === 'User'
                     && Hash::check('password123', $attributes['password']);
             }))
             ->andReturn($user);
@@ -50,6 +50,6 @@ class RegisterActionTest extends TestCase
         $this->assertArrayHasKey('access_token', $response);
         $this->assertSame('Bearer', $response['token_type']);
         $this->assertSame('dorothy_vaughan', $response['user']['user_name']);
-        $this->assertSame('user', $response['user']['privilege']);
+        $this->assertSame('User', $response['user']['roles']);
     }
 }

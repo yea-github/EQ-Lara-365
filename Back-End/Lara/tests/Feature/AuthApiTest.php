@@ -32,7 +32,7 @@ class AuthApiTest extends TestCase
             'first_name' => 'Ada',
             'last_name' => 'Lovelace',
             'user_name' => 'ada_lovelace',
-            'privilege' => 'user',
+            'roles' => 'User',
         ]));
 
         $response = $this->postJson('/api/register', [
@@ -50,7 +50,7 @@ class AuthApiTest extends TestCase
             ->assertJsonPath('user.first_name', 'Ada')
             ->assertJsonPath('user.last_name', 'Lovelace')
             ->assertJsonPath('user.user_name', 'ada_lovelace')
-            ->assertJsonPath('user.privilege', 'user');
+            ->assertJsonPath('user.roles', 'User');
     }
 
     public function test_register_requires_unique_username_and_valid_password(): void
@@ -79,7 +79,7 @@ class AuthApiTest extends TestCase
             'first_name' => 'Alan',
             'last_name' => 'Turing',
             'user_name' => 'alan_turing',
-            'privilege' => 'user',
+            'roles' => 'User',
         ]));
 
         $response = $this->postJson('/api/login', [
@@ -125,7 +125,7 @@ class AuthApiTest extends TestCase
             'first_name' => 'Katherine',
             'last_name' => 'Johnson',
             'user_name' => 'katherine_johnson',
-            'privilege' => 'admin',
+            'roles' => 'Admin',
         ]);
 
         $response = $this->getJson('/api/me');
@@ -137,7 +137,7 @@ class AuthApiTest extends TestCase
                 'first_name' => 'Katherine',
                 'last_name' => 'Johnson',
                 'user_name' => 'katherine_johnson',
-                'privilege' => 'admin',
+                'roles' => 'Admin',
             ]);
     }
 
@@ -156,7 +156,7 @@ class AuthApiTest extends TestCase
             'first_name' => 'Refresh',
             'last_name' => 'User',
             'user_name' => 'refresh_user',
-            'privilege' => 'user',
+            'roles' => 'User',
         ], 'refreshed-token'));
 
         $response = $this->postJson('/api/refresh');
@@ -196,7 +196,7 @@ class AuthApiTest extends TestCase
                 'first_name',
                 'last_name',
                 'user_name',
-                'privilege',
+                'roles',
             ],
         ];
     }

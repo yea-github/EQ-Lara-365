@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\InventorySummeryController;
 use App\Http\Controllers\Api\ProjectOverviewController;
 use App\Http\Controllers\Api\RevenueOverviewController;
 use App\Http\Controllers\Api\SalesController;
+use App\Http\Controllers\Api\UsersRolesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,7 @@ Route::get('/pub/get-hr-overview', [HrOverviewController::class, 'getHrOverview'
 Route::get('/pub/get-inventory-summery', [InventorySummeryController::class, 'getInventorySummery']);
 Route::get('/pub/get-project-overview', [ProjectOverviewController::class, 'getProjectOverview']);
 Route::get('/pub/get-revenue-overview', [RevenueOverviewController::class, 'getRevenueOverview']);
+Route::get('/pub/get-all-users-roles', [UsersRolesController::class, 'getAllUsersRoles']);
 Route::get('/pub/sales-by-category', [SalesController::class, 'salesByCategory']);
 
 Route::middleware('auth:api')->group(function () {
@@ -44,5 +46,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/get-inventory-summery', [InventorySummeryController::class, 'getInventorySummery']);
     Route::get('/get-project-overview', [ProjectOverviewController::class, 'getProjectOverview']);
     Route::get('/get-revenue-overview', [RevenueOverviewController::class, 'getRevenueOverview']);
+    Route::get('/get-all-users-roles', [UsersRolesController::class, 'getAllUsersRoles']);
     Route::get('/sales-by-category', [SalesController::class, 'salesByCategory']);
 });

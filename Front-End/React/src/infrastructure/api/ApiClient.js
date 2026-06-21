@@ -4,10 +4,19 @@ import AuthSessionService from '../../application/auth/AuthSessionService.js'
 class ApiClient {
   async getJson(endpoint) {
     return LoadingOverlayService.track(async () => {
-      const response = await fetch(this.endpointForSession(endpoint), this.requestOptions())
+      const requestEndpoint = this.endpointForSession(endpoint)
+      let response = await fetch(requestEndpoint, this.requestOptions())
 
       if (!response.ok) {
-        this.handleUnauthorized(response)
+        if (this.shouldRetryPublicEndpoint(response, requestEndpoint, endpoint)) {
+          AuthSessionService.clear()
+          response = await fetch(endpoint, this.requestOptions())
+        } else {
+          this.handleUnauthorized(response)
+        }
+      }
+
+      if (!response.ok) {
         throw response
       }
 
@@ -60,6 +69,12 @@ class ApiClient {
     if (response.status === 401 && AuthSessionService.isAuthenticated()) {
       AuthSessionService.clear()
     }
+  }
+
+  shouldRetryPublicEndpoint(response, requestEndpoint, originalEndpoint) {
+    return response.status === 401
+      && AuthSessionService.isAuthenticated()
+      && requestEndpoint !== originalEndpoint
   }
 }
 

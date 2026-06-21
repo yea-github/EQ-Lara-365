@@ -4,6 +4,7 @@ class LoadingOverlayService {
   constructor() {
     this.counter = new LoadingCounter()
     this.listeners = new Set()
+    this.visible = false
   }
 
   subscribe(listener) {
@@ -17,18 +18,24 @@ class LoadingOverlayService {
 
   async track(request) {
     this.counter.begin()
-    this.emit()
+    this.emitIfChanged()
 
     try {
       return await request()
     } finally {
       this.counter.end()
-      this.emit()
+      this.emitIfChanged()
     }
   }
 
-  emit() {
+  emitIfChanged() {
     const isLoading = this.counter.isLoading()
+
+    if (this.visible === isLoading) {
+      return
+    }
+
+    this.visible = isLoading
 
     this.listeners.forEach((listener) => listener(isLoading))
   }

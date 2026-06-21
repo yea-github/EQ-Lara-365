@@ -15,7 +15,7 @@ class RegisterAction
     ) {}
 
     /**
-     * @param  array{first_name: string, last_name: string, username: string, password: string, privilege?: string}  $data
+     * @param  array{first_name: string, last_name: string, username: string, password: string, roles?: string}  $data
      * @return array{access_token: string, token_type: string, expires_in: int, user: array<string, mixed>}
      */
     public function execute(array $data): array
@@ -24,7 +24,7 @@ class RegisterAction
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'user_name' => $data['username'],
-            'privilege' => $data['privilege'] ?? 'user',
+            'roles' => $data['roles'] ?? 'User',
             'password' => Hash::make($data['password']),
         ]);
 

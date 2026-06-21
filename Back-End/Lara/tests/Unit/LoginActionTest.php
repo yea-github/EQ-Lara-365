@@ -19,7 +19,7 @@ class LoginActionTest extends TestCase
             'first_name' => 'Mary',
             'last_name' => 'Jackson',
             'user_name' => 'mary_jackson',
-            'privilege' => 'user',
+            'roles' => 'User',
         ]);
         $user->Id = 15;
 

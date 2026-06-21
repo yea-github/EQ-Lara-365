@@ -394,7 +394,17 @@ button {
   gap: 22px;
 }
 
+.users-roles-page {
+  grid-template-rows: auto auto 1fr;
+  gap: 22px;
+}
+
 .hr-payroll-primary-row {
+  width: 100%;
+  min-width: 0;
+}
+
+.users-roles-primary-row {
   width: 100%;
   min-width: 0;
 }
@@ -1048,6 +1058,10 @@ button {
   border-spacing: 0;
   color: #172542;
   font-size: 13px;
+}
+
+.users-roles-table-card .p-datatable-table {
+  min-width: 760px;
 }
 
 .employee-table-card .p-datatable-thead > tr > th {

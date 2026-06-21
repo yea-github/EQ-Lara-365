@@ -33,7 +33,7 @@ class AuthController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:User,user_name'],
             'password' => ['required', 'string', Password::min(6)],
-            'privilege' => ['sometimes', 'string', 'max:255'],
+            'roles' => ['sometimes', 'string', 'max:255'],
         ]);
 
         return response()->json($register->execute($data), 201);

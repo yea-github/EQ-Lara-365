@@ -14,7 +14,7 @@ class MeActionTest extends TestCase
             'first_name' => 'Margaret',
             'last_name' => 'Hamilton',
             'user_name' => 'margaret_hamilton',
-            'privilege' => 'admin',
+            'roles' => 'Admin',
         ]);
         $user->Id = 7;
 
@@ -25,7 +25,7 @@ class MeActionTest extends TestCase
             'first_name' => 'Margaret',
             'last_name' => 'Hamilton',
             'user_name' => 'margaret_hamilton',
-            'privilege' => 'admin',
+            'roles' => 'Admin',
         ], app(MeAction::class)->execute());
     }
 }

@@ -64,7 +64,6 @@ class EmployeeTable extends React.Component {
     return (
       <DataTable
         value={this.rows()}
-        loading={this.state.loading}
         filters={this.state.filters}
         onFilter={this.handleFilter}
         filterDisplay="row"

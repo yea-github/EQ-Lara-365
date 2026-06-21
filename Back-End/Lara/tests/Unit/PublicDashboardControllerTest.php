@@ -8,12 +8,14 @@ use App\Application\HrOverview\GetHrOverviewAction;
 use App\Application\InventorySummery\GetInventorySummeryAction;
 use App\Application\ProjectOverview\GetProjectOverviewAction;
 use App\Application\Sales\GetSalesByCategoryAction;
+use App\Application\UsersRoles\GetAllUsersRolesAction;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DailySummeryController;
 use App\Http\Controllers\Api\HrOverviewController;
 use App\Http\Controllers\Api\InventorySummeryController;
 use App\Http\Controllers\Api\ProjectOverviewController;
 use App\Http\Controllers\Api\SalesController;
+use App\Http\Controllers\Api\UsersRolesController;
 use Illuminate\Http\JsonResponse;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
@@ -87,6 +89,17 @@ class PublicDashboardControllerTest extends TestCase
         $action->shouldReceive('execute')->once()->andReturn($payload);
 
         $this->assertJsonResponse($payload, (new SalesController())->salesByCategory($action));
+    }
+
+    public function test_public_users_roles_returns_same_payload_as_action(): void
+    {
+        $payload = [
+            ['Id' => 1, 'first_name' => 'Ada', 'last_name' => 'Lovelace', 'user_name' => 'ada-124', 'roles' => 'Super Admin'],
+        ];
+        $action = Mockery::mock(GetAllUsersRolesAction::class);
+        $action->shouldReceive('execute')->once()->andReturn($payload);
+
+        $this->assertJsonResponse($payload, (new UsersRolesController())->getAllUsersRoles($action));
     }
 
     /**
