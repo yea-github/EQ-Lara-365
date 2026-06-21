@@ -1,7 +1,9 @@
+import ApiClient from './ApiClient.js'
 import Employee from '../../domain/employee/Employee.js'
 
 class EmployeeApiRepository {
   constructor() {
+    this.client = new ApiClient()
     this.endpoint = `${this.baseUrl()}/api/pub/get-all-employees`
   }
 
@@ -10,19 +12,13 @@ class EmployeeApiRepository {
   }
 
   async all() {
-    const response = await fetch(this.endpoint, {
-      headers: {
-        Accept: 'application/json',
-      },
-    })
+    try {
+      const rows = await this.client.getJson(this.endpoint)
 
-    if (!response.ok) {
+      return rows.map((row) => new Employee(row))
+    } catch {
       throw new Error('Employee data could not be loaded.')
     }
-
-    const rows = await response.json()
-
-    return rows.map((row) => new Employee(row))
   }
 }
 

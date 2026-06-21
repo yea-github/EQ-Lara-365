@@ -1,7 +1,9 @@
+import ApiClient from './ApiClient.js'
 import RevenueOverview from '../../domain/revenueOverview/RevenueOverview.js'
 
 class RevenueOverviewApiRepository {
   constructor() {
+    this.client = new ApiClient()
     this.endpoint = `${this.baseUrl()}/api/pub/get-revenue-overview`
   }
 
@@ -10,19 +12,13 @@ class RevenueOverviewApiRepository {
   }
 
   async all() {
-    const response = await fetch(this.endpoint, {
-      headers: {
-        Accept: 'application/json',
-      },
-    })
+    try {
+      const rows = await this.client.getJson(this.endpoint)
 
-    if (!response.ok) {
+      return rows.map((row) => new RevenueOverview(row))
+    } catch {
       throw new Error('Revenue overview data could not be loaded.')
     }
-
-    const rows = await response.json()
-
-    return rows.map((row) => new RevenueOverview(row))
   }
 }
 

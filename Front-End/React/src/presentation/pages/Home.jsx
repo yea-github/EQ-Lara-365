@@ -16,6 +16,8 @@ import SalesMenuItem from '../components/navigation/SalesMenuItem.jsx'
 import SettingsMenuItem from '../components/navigation/SettingsMenuItem.jsx'
 import SystemMenuItem from '../components/navigation/SystemMenuItem.jsx'
 import UsersRolesMenuItem from '../components/navigation/UsersRolesMenuItem.jsx'
+import AuthSessionService from '../../application/auth/AuthSessionService.js'
+import AuthAction from '../components/auth/AuthAction.jsx'
 import PageRenderer from './PageRenderer.jsx'
 
 class Home extends React.Component {
@@ -24,6 +26,27 @@ class Home extends React.Component {
     this.state = {
       activeMenuId: NavigationService.defaultMenuId(),
       sidebarOpen: this.isDesktopViewport(),
+      authRevision: 0,
+    }
+    this.unsubscribeAuth = null
+    this.hasHandledInitialAuthState = false
+  }
+
+  componentDidMount() {
+    this.unsubscribeAuth = AuthSessionService.subscribe(() => {
+      if (!this.hasHandledInitialAuthState) {
+        this.hasHandledInitialAuthState = true
+
+        return
+      }
+
+      this.setState((state) => ({ authRevision: state.authRevision + 1 }))
+    })
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscribeAuth) {
+      this.unsubscribeAuth()
     }
   }
 
@@ -88,7 +111,11 @@ class Home extends React.Component {
           </nav>
         </aside>
         <section className="content-panel">
-          <PageRenderer activeMenuId={this.state.activeMenuId} />
+          <AuthAction />
+          <PageRenderer
+            key={`${this.state.activeMenuId}-${this.state.authRevision}`}
+            activeMenuId={this.state.activeMenuId}
+          />
         </section>
       </main>
     )

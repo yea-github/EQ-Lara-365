@@ -1,7 +1,9 @@
+import ApiClient from './ApiClient.js'
 import DailySummery from '../../domain/dashboard/DailySummery.js'
 
 class DailySummeryApiRepository {
   constructor() {
+    this.client = new ApiClient()
     this.endpoint = `${this.baseUrl()}/api/pub/get-daily-summery`
   }
 
@@ -10,19 +12,13 @@ class DailySummeryApiRepository {
   }
 
   async all() {
-    const response = await fetch(this.endpoint, {
-      headers: {
-        Accept: 'application/json',
-      },
-    })
+    try {
+      const rows = await this.client.getJson(this.endpoint)
 
-    if (!response.ok) {
+      return rows.map((row) => new DailySummery(row))
+    } catch {
       throw new Error('Daily summary data could not be loaded.')
     }
-
-    const rows = await response.json()
-
-    return rows.map((row) => new DailySummery(row))
   }
 }
 

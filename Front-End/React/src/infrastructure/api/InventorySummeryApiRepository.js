@@ -1,7 +1,9 @@
+import ApiClient from './ApiClient.js'
 import InventorySummery from '../../domain/inventorySummery/InventorySummery.js'
 
 class InventorySummeryApiRepository {
   constructor() {
+    this.client = new ApiClient()
     this.endpoint = `${this.baseUrl()}/api/pub/get-inventory-summery`
   }
 
@@ -10,19 +12,13 @@ class InventorySummeryApiRepository {
   }
 
   async all() {
-    const response = await fetch(this.endpoint, {
-      headers: {
-        Accept: 'application/json',
-      },
-    })
+    try {
+      const rows = await this.client.getJson(this.endpoint)
 
-    if (!response.ok) {
+      return rows.map((row) => new InventorySummery(row))
+    } catch {
       throw new Error('Inventory summary data could not be loaded.')
     }
-
-    const rows = await response.json()
-
-    return rows.map((row) => new InventorySummery(row))
   }
 }
 

@@ -1,7 +1,9 @@
+import ApiClient from './ApiClient.js'
 import SalesByCategory from '../../domain/salesByCategory/SalesByCategory.js'
 
 class SalesByCategoryApiRepository {
   constructor() {
+    this.client = new ApiClient()
     this.endpoint = `${this.baseUrl()}/api/pub/sales-by-category`
   }
 
@@ -10,19 +12,13 @@ class SalesByCategoryApiRepository {
   }
 
   async all() {
-    const response = await fetch(this.endpoint, {
-      headers: {
-        Accept: 'application/json',
-      },
-    })
+    try {
+      const rows = await this.client.getJson(this.endpoint)
 
-    if (!response.ok) {
+      return rows.map((row) => new SalesByCategory(row))
+    } catch {
       throw new Error('Sales by category data could not be loaded.')
     }
-
-    const rows = await response.json()
-
-    return rows.map((row) => new SalesByCategory(row))
   }
 }
 
