@@ -1,4 +1,9 @@
-export const REPORTING_YEARS = ['2020', '2021', '2022', '2023', '2024', '2025', '2026']
+const FIRST_REPORTING_YEAR = 2020
+
+export const REPORTING_YEARS = Array.from(
+  { length: new Date().getFullYear() - FIRST_REPORTING_YEAR + 1 },
+  (_, index) => String(FIRST_REPORTING_YEAR + index),
+)
 
 export const REPORTING_MONTHS = [
   'January',

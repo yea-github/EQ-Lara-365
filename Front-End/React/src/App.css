@@ -205,6 +205,24 @@ button {
   width: 100%;
 }
 
+.dashboard-third-row {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(520px, 1.15fr) minmax(360px, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.hr-payroll-page {
+  grid-template-rows: auto auto 1fr;
+  gap: 22px;
+}
+
+.hr-payroll-primary-row {
+  width: 100%;
+  min-width: 0;
+}
+
 .summary-card {
   display: grid;
   grid-template-rows: 1fr auto;
@@ -364,6 +382,26 @@ button {
   padding: 22px;
 }
 
+.project-overview-card,
+.inventory-summery-card,
+.hr-overview-card,
+.employee-table-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: 100%;
+  min-width: 0;
+  min-height: 286px;
+  border: 1px solid #e4e9f2;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(31, 45, 71, 0.07);
+  padding: 22px;
+}
+
+.employee-table-card {
+  min-height: 620px;
+}
+
 .revenue-overview-header {
   display: flex;
   align-items: center;
@@ -378,6 +416,58 @@ button {
   font-size: 18px;
   font-weight: 800;
   line-height: 1.2;
+}
+
+.project-overview-header,
+.inventory-summery-header,
+.hr-overview-header,
+.employee-table-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.project-overview-header h2,
+.inventory-summery-header h2,
+.hr-overview-header h2,
+.employee-table-header h2 {
+  margin: 0;
+  color: #152441;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.dashboard-widget-filters {
+  display: grid;
+  grid-template-columns: minmax(86px, 98px) minmax(104px, 128px);
+  gap: 8px;
+}
+
+.dashboard-widget-filters label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.dashboard-widget-filters span {
+  color: #66728a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.dashboard-widget-filters select {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid #d8e0ec;
+  border-radius: 7px;
+  background: #f9fbfe;
+  color: #1d2a42;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0 8px;
 }
 
 .revenue-year-select {
@@ -520,6 +610,361 @@ button {
   font-weight: 700;
 }
 
+.project-overview-content {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.92fr) minmax(160px, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-height: 200px;
+}
+
+.project-overview-chart {
+  position: relative;
+  min-height: 190px;
+}
+
+.project-overview-chart .p-chart {
+  min-height: 190px;
+}
+
+.project-overview-total {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  display: grid;
+  gap: 4px;
+  width: 92px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.project-overview-total strong {
+  color: #13213d;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.project-overview-total span {
+  color: #68758b;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.project-overview-legend {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-overview-legend li {
+  display: grid;
+  grid-template-columns: 12px 32px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  color: #172542;
+  font-size: 13px;
+}
+
+.project-overview-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+}
+
+.project-overview-legend strong {
+  font-weight: 800;
+}
+
+.project-overview-legend span:last-child {
+  min-width: 0;
+  color: #172542;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.inventory-summery-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.inventory-summery-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid #e3e8f2;
+  border-radius: 8px;
+  color: #172542;
+  font-size: 13px;
+}
+
+.inventory-summery-table th,
+.inventory-summery-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid #e6ebf3;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.inventory-summery-table th:first-child,
+.inventory-summery-table td:first-child {
+  text-align: left;
+}
+
+.inventory-summery-table th {
+  background: #f8faff;
+  color: #13213d;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.inventory-summery-table td {
+  font-weight: 700;
+}
+
+.inventory-summery-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.project-overview-status,
+.inventory-summery-status,
+.hr-overview-status,
+.employee-table-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #52627d;
+  font-weight: 700;
+}
+
+.hr-overview-card {
+  gap: 12px;
+}
+
+.hr-overview-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.hr-overview-metric {
+  display: grid;
+  gap: 5px;
+  min-height: 72px;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.hr-overview-metric strong {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.hr-overview-metric span {
+  color: #33415c;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hr-overview-metric-blue {
+  background: #edf3ff;
+  color: #1d63e9;
+}
+
+.hr-overview-metric-green {
+  background: #edf9f1;
+  color: #10a86a;
+}
+
+.hr-overview-metric-orange {
+  background: #fff1e7;
+  color: #d85d24;
+}
+
+.hr-overview-metric-red {
+  background: #fff0f2;
+  color: #d7293a;
+}
+
+.hr-overview-headcount {
+  display: grid;
+  gap: 12px;
+}
+
+.hr-overview-headcount h3 {
+  margin: 0;
+  color: #14233f;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.hr-overview-headcount ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hr-overview-headcount li {
+  display: grid;
+  grid-template-columns: minmax(118px, 0.72fr) minmax(120px, 1fr) 34px;
+  align-items: center;
+  gap: 8px;
+}
+
+.hr-overview-department {
+  min-width: 0;
+  color: #172542;
+  font-size: 12px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hr-overview-bar-track {
+  display: block;
+  height: 11px;
+  overflow: hidden;
+  background: #eaf0f9;
+}
+
+.hr-overview-bar {
+  display: block;
+  height: 100%;
+  background: #2f73ff;
+}
+
+.hr-overview-headcount strong {
+  color: #172542;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.employee-table-card {
+  gap: 12px;
+}
+
+.employee-table-card .p-datatable-wrapper {
+  border: 1px solid #e3e8f2;
+  border-radius: 8px;
+}
+
+.employee-table-card .p-datatable-table {
+  min-width: 1220px;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #172542;
+  font-size: 13px;
+}
+
+.employee-table-card .p-datatable-thead > tr > th {
+  border-right: 1px solid #e4e9f2;
+  border-bottom: 1px solid #dfe6f1;
+  background: #f8faff;
+  color: #13213d;
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.employee-table-card .p-datatable-thead > tr > th:last-child,
+.employee-table-card .p-datatable-tbody > tr > td:last-child {
+  border-right: 0;
+}
+
+.employee-table-card .p-column-header-content {
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 22px;
+}
+
+.employee-table-card .p-column-title {
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.employee-table-card .p-sortable-column-icon {
+  width: 14px;
+  height: 14px;
+  color: #52627d;
+  flex: 0 0 auto;
+}
+
+.employee-table-card .p-filter-column input {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid #d8e0ec;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #1d2a42;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 8px;
+}
+
+.employee-table-card .p-column-filter-menu-button,
+.employee-table-card .p-column-filter-clear-button {
+  display: none;
+}
+
+.employee-table-card .p-datatable-tbody > tr > td {
+  max-width: 260px;
+  border-right: 1px solid #e9edf5;
+  border-bottom: 1px solid #e9edf5;
+  padding: 12px 10px;
+  color: #24324d;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.employee-table-card .p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background: #fbfcff;
+}
+
+.employee-table-card .p-paginator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 0 0;
+}
+
+.employee-table-card .p-paginator button {
+  min-width: 34px;
+  height: 34px;
+  border: 1px solid #d8e0ec;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #24324d;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.employee-table-card .p-paginator .p-highlight {
+  border-color: #2f73ff;
+  background: #2f73ff;
+  color: #ffffff;
+}
+
+.employee-table-card .p-paginator button:disabled {
+  color: #9aa7bc;
+  cursor: default;
+}
+
 .revenue-year-select select {
   min-height: 36px;
   border: 1px solid #d8e0ec;
@@ -631,8 +1076,16 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .dashboard-third-row {
+    grid-template-columns: 1fr;
+  }
+
   .revenue-overview-card,
-  .sales-category-card {
+  .sales-category-card,
+  .project-overview-card,
+  .inventory-summery-card,
+  .hr-overview-card,
+  .employee-table-card {
     padding: 16px;
   }
 
@@ -650,12 +1103,36 @@ button {
     flex-direction: column;
   }
 
+  .project-overview-header,
+  .inventory-summery-header,
+  .hr-overview-header,
+  .employee-table-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .sales-category-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dashboard-widget-filters {
     grid-template-columns: 1fr 1fr;
   }
 
   .sales-category-content {
     grid-template-columns: 1fr;
+  }
+
+  .project-overview-content {
+    grid-template-columns: 1fr;
+  }
+
+  .hr-overview-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hr-overview-headcount li {
+    grid-template-columns: minmax(96px, 0.64fr) minmax(110px, 1fr) 32px;
   }
 
   .revenue-chart-body,
@@ -684,6 +1161,10 @@ button {
   }
 
   .dashboard-secondary-row {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-third-row {
     grid-template-columns: 1fr;
   }
 }
