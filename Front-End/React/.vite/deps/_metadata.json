@@ -1,0 +1,80 @@
+{
+  "hash": "2b6a3ed0",
+  "configHash": "eea35d1b",
+  "lockfileHash": "5fae7113",
+  "browserHash": "add8851d",
+  "optimized": {
+    "chart.js/auto": {
+      "src": "../../node_modules/chart.js/auto/auto.js",
+      "file": "chart__js_auto.js",
+      "fileHash": "3d335d14",
+      "needsInterop": false
+    },
+    "primereact/api": {
+      "src": "../../node_modules/primereact/api/api.esm.js",
+      "file": "primereact_api.js",
+      "fileHash": "bc26a632",
+      "needsInterop": false
+    },
+    "primereact/chart": {
+      "src": "../../node_modules/primereact/chart/chart.esm.js",
+      "file": "primereact_chart.js",
+      "fileHash": "81716c01",
+      "needsInterop": false
+    },
+    "primereact/column": {
+      "src": "../../node_modules/primereact/column/column.esm.js",
+      "file": "primereact_column.js",
+      "fileHash": "b3b62fa5",
+      "needsInterop": false
+    },
+    "primereact/datatable": {
+      "src": "../../node_modules/primereact/datatable/datatable.esm.js",
+      "file": "primereact_datatable.js",
+      "fileHash": "cf287dee",
+      "needsInterop": false
+    },
+    "primereact/progressspinner": {
+      "src": "../../node_modules/primereact/progressspinner/progressspinner.esm.js",
+      "file": "primereact_progressspinner.js",
+      "fileHash": "8f6dfc25",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "e81cc216",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "32e7e9b2",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "7ab32420",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "api.esm-qwn9V1B6": {
+      "file": "api.esm-qwn9V1B6.js",
+      "isDynamicEntry": false
+    },
+    "componentbase.esm-1cxYlBEk": {
+      "file": "componentbase.esm-1cxYlBEk.js",
+      "isDynamicEntry": false
+    },
+    "react-Ea1HnpA1": {
+      "file": "react-Ea1HnpA1.js",
+      "isDynamicEntry": false
+    },
+    "react-dom-BiNnG8uc": {
+      "file": "react-dom-BiNnG8uc.js",
+      "isDynamicEntry": false
+    }
+  }
+}

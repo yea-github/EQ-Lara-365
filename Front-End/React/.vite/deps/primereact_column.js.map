@@ -1,0 +1,1 @@
+{"version":3,"file":"primereact_column.js","names":[],"sources":["../../node_modules/primereact/column/column.esm.js"],"sourcesContent":["'use client';\nvar Column = function Column() {};\n//@todo Pass Parent MetaData\n\nColumn.displayName = 'Column';\n\nexport { Column };\n"],"x_google_ignoreList":[0],"mappings":";;AACA,IAAI,SAAS,SAAS,SAAS,CAAC;AAGhC,OAAO,cAAc"}
