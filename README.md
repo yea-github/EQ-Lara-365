@@ -116,7 +116,27 @@ If `VITE_API_BASE_URL` is not set, the frontend uses `http://127.0.0.1:8000`.
 
 ## Architecture
 
-The codebase follows a layered architecture that keeps framework, domain, application, and presentation responsibilities separate.
+The codebase follows Domain Driven Design and layered architecture principles. The important business concepts are organized as domain modules, while framework details, HTTP routing, database access, and React rendering stay in separate layers.
+
+### Domain Driven Design
+
+Domain Driven Design is used to keep the software close to the business language of the ERP application. Instead of organizing everything only by technical type, the project separates work around business domains such as `Auth`, `Employee`, `Customer`, `DailySummery`, `HrOverview`, `InventorySummery`, `ProjectOverview`, `RevenueOverview`, `Sales`, and `UsersRoles`.
+
+In the backend, each domain owns its repository contract under `app/Domain`. Application actions use those contracts to express business use cases without depending directly on Eloquent query details. The infrastructure layer then provides the actual Eloquent implementations.
+
+In the frontend, the same idea appears through domain models under `src/domain`. API responses are converted into meaningful objects such as `Employee`, `DailySummery`, `RevenueOverview`, `ProjectOverview`, and `UserRole` before they are used by application services and React components.
+
+| DDD Concept | Backend Implementation | Frontend Implementation |
+| --- | --- | --- |
+| Domain language | Module names match ERP concepts: employee, customer, sales, inventory, HR, projects, revenue, auth. | Domain model names match UI/business concepts used by pages and services. |
+| Domain layer | `app/Domain/*/Repositories/*RepositoryInterface.php` | `src/domain/**/*.js` |
+| Application layer | `app/Application/*/*Action.php` use cases | `src/application/**/*Service.js` services |
+| Infrastructure layer | `app/Infrastructure/Persistence/Eloquent/*Repository.php` | `src/infrastructure/api/*ApiRepository.js` |
+| Presentation layer | API controllers in `app/Http/Controllers/Api` | React pages and components in `src/presentation` |
+| Dependency inversion | Actions depend on repository interfaces, not database classes. | Components depend on services/repositories, not raw fetch logic. |
+| Bounded context style | Each ERP area has its own action, repository contract, and response mapping. | Each UI module has its own model, service, repository, and component set. |
+
+This keeps the backend business use cases testable, keeps database decisions replaceable, and gives the frontend a stable model layer between REST responses and UI rendering.
 
 ### Backend Architecture
 
@@ -152,6 +172,7 @@ Database
 
 | Pattern | Where | Benefit |
 | --- | --- | --- |
+| Domain Driven Design | Domain, Application, Infrastructure, and HTTP layers are separated by business module. | Keeps ERP business concepts clear and prevents controllers/models from becoming the whole application. |
 | Controller-Service Action | Controllers call focused `*Action` classes. | Keeps controllers small and moves use cases into testable classes. |
 | Repository Pattern | Domain interfaces and Eloquent implementations. | Decouples application logic from database access details. |
 | Dependency Injection | Laravel service container injects actions and repositories. | Makes code easier to test and replace. |
@@ -186,6 +207,7 @@ Domain Model
 
 | Pattern | Where | Benefit |
 | --- | --- | --- |
+| Domain Driven Design | Domain models, application services, API repositories, and presentation components are separated by module. | Keeps UI behavior aligned with business concepts instead of raw API payloads. |
 | Repository Pattern | `src/infrastructure/api/*ApiRepository.js` | Isolates REST calls from React components. |
 | Service Layer | `src/application/*/*Service.js` | Keeps page components focused on rendering. |
 | Domain Model | `src/domain/**/*.js` | Gives API rows predictable behavior and formatting. |
