@@ -1,6 +1,16 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Crm\ConversionRateController;
+use App\Http\Controllers\Api\Crm\LeadsBySourceController;
+use App\Http\Controllers\Api\Crm\LeadsOverTimeController;
+use App\Http\Controllers\Api\Crm\OpportunitiesController;
+use App\Http\Controllers\Api\Crm\PipelineOverviewController;
+use App\Http\Controllers\Api\Crm\QualifiedLeadsController;
+use App\Http\Controllers\Api\Crm\RecentLeadsController;
+use App\Http\Controllers\Api\Crm\TopOpportunitiesController;
+use App\Http\Controllers\Api\Crm\TotalLeadsController;
+use App\Http\Controllers\Api\Crm\WonDealsController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DailySummeryController;
 use App\Http\Controllers\Api\EmployeeController;
@@ -34,6 +44,16 @@ Route::get('/pub/get-project-overview', [ProjectOverviewController::class, 'getP
 Route::get('/pub/get-revenue-overview', [RevenueOverviewController::class, 'getRevenueOverview']);
 Route::get('/pub/get-all-users-roles', [UsersRolesController::class, 'getAllUsersRoles']);
 Route::get('/pub/sales-by-category', [SalesController::class, 'salesByCategory']);
+Route::get('/pub/crm/total-leads', [TotalLeadsController::class, 'getTotalLeads']);
+Route::get('/pub/crm/qualified-leads', [QualifiedLeadsController::class, 'getQualifiedLeads']);
+Route::get('/pub/crm/opportunities', [OpportunitiesController::class, 'getOpportunities']);
+Route::get('/pub/crm/won-deals', [WonDealsController::class, 'getWonDeals']);
+Route::get('/pub/crm/conversion-rate', [ConversionRateController::class, 'getConversionRate']);
+Route::get('/pub/crm/leads-over-time', [LeadsOverTimeController::class, 'getLeadsOverTime']);
+Route::get('/pub/crm/leads-by-source', [LeadsBySourceController::class, 'getLeadsBySource']);
+Route::get('/pub/crm/pipeline-overview', [PipelineOverviewController::class, 'getPipelineOverview']);
+Route::get('/pub/crm/recent-leads', [RecentLeadsController::class, 'getRecentLeads']);
+Route::get('/pub/crm/top-opportunities', [TopOpportunitiesController::class, 'getTopOpportunities']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -48,4 +68,14 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/get-revenue-overview', [RevenueOverviewController::class, 'getRevenueOverview']);
     Route::get('/get-all-users-roles', [UsersRolesController::class, 'getAllUsersRoles']);
     Route::get('/sales-by-category', [SalesController::class, 'salesByCategory']);
+    Route::get('/crm/total-leads', [TotalLeadsController::class, 'getTotalLeads']);
+    Route::get('/crm/qualified-leads', [QualifiedLeadsController::class, 'getQualifiedLeads']);
+    Route::get('/crm/opportunities', [OpportunitiesController::class, 'getOpportunities']);
+    Route::get('/crm/won-deals', [WonDealsController::class, 'getWonDeals']);
+    Route::get('/crm/conversion-rate', [ConversionRateController::class, 'getConversionRate']);
+    Route::get('/crm/leads-over-time', [LeadsOverTimeController::class, 'getLeadsOverTime']);
+    Route::get('/crm/leads-by-source', [LeadsBySourceController::class, 'getLeadsBySource']);
+    Route::get('/crm/pipeline-overview', [PipelineOverviewController::class, 'getPipelineOverview']);
+    Route::get('/crm/recent-leads', [RecentLeadsController::class, 'getRecentLeads']);
+    Route::get('/crm/top-opportunities', [TopOpportunitiesController::class, 'getTopOpportunities']);
 });

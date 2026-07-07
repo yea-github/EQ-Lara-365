@@ -229,6 +229,84 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        $crmCardMetrics = [
+            'total_leads' => [
+                'title' => 'Total Leads',
+                'base_value' => 322,
+                'step' => 12.14,
+                'seasonal' => 18,
+                'change' => 18.5,
+                'target' => 1256,
+            ],
+            'qualified_leads' => [
+                'title' => 'Qualified Leads',
+                'base_value' => 112,
+                'step' => 4.08,
+                'seasonal' => 7,
+                'change' => 12.4,
+                'target' => 423,
+            ],
+            'opportunities' => [
+                'title' => 'Opportunities',
+                'base_value' => 31,
+                'step' => 1.12,
+                'seasonal' => 3,
+                'change' => 9.7,
+                'target' => 109,
+            ],
+            'won_deals' => [
+                'title' => 'Won Deals',
+                'base_value' => 18,
+                'step' => 0.91,
+                'seasonal' => 4,
+                'change' => 21.3,
+                'target' => 89,
+            ],
+            'conversion_rate' => [
+                'title' => 'Conversion Rate',
+                'base_value' => 12.3,
+                'step' => 0.12,
+                'seasonal' => 0.45,
+                'change' => 4.6,
+                'target' => 23.8,
+            ],
+        ];
+
+        foreach (range(2020, 2026) as $year) {
+            foreach ($months as $index => $month) {
+                if ($year === 2026 && $index > 5) {
+                    break;
+                }
+
+                $periodNumber = (($year - 2020) * 12) + $index + 1;
+
+                foreach ($crmCardMetrics as $metricKey => $metric) {
+                    $value = $metric['base_value']
+                        + ($periodNumber * $metric['step'])
+                        + ((($index + 1) % 4) * $metric['seasonal']);
+                    $changePercent = max(1.2, $metric['change'] - ((78 - $periodNumber) * 0.08) + (($index % 3) * 0.2));
+
+                    if ($year === 2026 && $month === 'June') {
+                        $value = $metric['target'];
+                        $changePercent = $metric['change'];
+                    }
+
+                    DB::table('CRM_Summary_Cards')->updateOrInsert(
+                        [
+                            'metric_key' => $metricKey,
+                            'year' => $year,
+                            'month' => $month,
+                        ],
+                        [
+                            'title' => $metric['title'],
+                            'value' => round($value, $metricKey === 'conversion_rate' ? 1 : 0),
+                            'change_percent' => round($changePercent, 1),
+                        ]
+                    );
+                }
+            }
+        }
+
         $salesRows = collect([
             ['year' => 2020, 'month' => 'January', 'category_name' => 'Electronics', 'sales_by_percentage' => 38, 'total_sales_price' => 5678345],
             ['year' => 2020, 'month' => 'January', 'category_name' => 'Machinery', 'sales_by_percentage' => 24, 'total_sales_price' => 2678345],
@@ -443,6 +521,102 @@ class DatabaseSeeder extends Seeder
                         'Expenses' => $expenses,
                     ]
                 );
+            }
+        }
+
+        $shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        $sourceRows = [
+            ['source' => 'Website', 'percentage' => 40],
+            ['source' => 'Referral', 'percentage' => 25],
+            ['source' => 'Social Media', 'percentage' => 15],
+            ['source' => 'Email', 'percentage' => 10],
+            ['source' => 'Others', 'percentage' => 10],
+        ];
+        $pipelineRows = [
+            ['stage' => 'New Leads', 'value' => 1256],
+            ['stage' => 'Contacted', 'value' => 845],
+            ['stage' => 'Qualified', 'value' => 423],
+            ['stage' => 'Proposal', 'value' => 198],
+            ['stage' => 'Won', 'value' => 89],
+        ];
+        $recentLeadTemplates = [
+            ['name' => 'John Doe', 'company' => 'Alpha Ltd', 'source' => 'Website', 'status' => 'New', 'day' => 24],
+            ['name' => 'Jane Smith', 'company' => 'Beta Corp', 'source' => 'Referral', 'status' => 'Contacted', 'day' => 24],
+            ['name' => 'Michael Brown', 'company' => 'Gamma Inc', 'source' => 'Social Media', 'status' => 'Qualified', 'day' => 23],
+            ['name' => 'Emily Davis', 'company' => 'Delta Co', 'source' => 'Email', 'status' => 'New', 'day' => 23],
+            ['name' => 'David Wilson', 'company' => 'Epsilon Ltd', 'source' => 'Website', 'status' => 'Contacted', 'day' => 22],
+            ['name' => 'Olivia Martin', 'company' => 'Zeta Group', 'source' => 'Referral', 'status' => 'Qualified', 'day' => 21],
+            ['name' => 'Noah Taylor', 'company' => 'Orion AG', 'source' => 'Website', 'status' => 'New', 'day' => 20],
+        ];
+        $opportunityTemplates = [
+            ['opportunity' => 'ERP Implementation', 'company' => 'Alpha Ltd', 'value' => 45000, 'stage' => 'Proposal', 'day' => 15],
+            ['opportunity' => 'CRM Integration', 'company' => 'Beta Corp', 'value' => 32000, 'stage' => 'Negotiation', 'day' => 20],
+            ['opportunity' => 'Cloud Migration', 'company' => 'Gamma Inc', 'value' => 28000, 'stage' => 'Qualification', 'day' => 10],
+            ['opportunity' => 'Website Redesign', 'company' => 'Delta Co', 'value' => 18000, 'stage' => 'Proposal', 'day' => 5],
+            ['opportunity' => 'Mobile App Development', 'company' => 'Epsilon Ltd', 'value' => 25000, 'stage' => 'Negotiation', 'day' => 18],
+            ['opportunity' => 'Support Automation', 'company' => 'Zeta Group', 'value' => 22000, 'stage' => 'Qualification', 'day' => 25],
+            ['opportunity' => 'Analytics Rollout', 'company' => 'Orion AG', 'value' => 36000, 'stage' => 'Proposal', 'day' => 28],
+        ];
+
+        foreach (range(2020, 2026) as $year) {
+            foreach ($months as $index => $month) {
+                if ($year === 2026 && $index > 5) {
+                    break;
+                }
+
+                $periodNumber = (($year - 2020) * 12) + $index + 1;
+                $referenceLeads = [100, 180, 215, 255, 345, 255, 238, 232, 230, 275, 350, 435];
+
+                foreach ($shortMonths as $leadMonthIndex => $leadMonth) {
+                    $leads = $year === 2026 && $month === 'June'
+                        ? $referenceLeads[$leadMonthIndex]
+                        : max(40, 80 + ($periodNumber * 5) + (($leadMonthIndex + 1) * 18) + (($leadMonthIndex % 4) * 12));
+
+                    DB::table('CRM_Leads_Over_Time')->updateOrInsert(
+                        ['year' => $year, 'month' => $month, 'lead_month' => $leadMonth],
+                        ['leads' => $leads]
+                    );
+                }
+
+                foreach ($sourceRows as $sourceIndex => $source) {
+                    DB::table('CRM_Leads_By_Source')->updateOrInsert(
+                        ['year' => $year, 'month' => $month, 'source' => $source['source']],
+                        ['percentage' => max(3, $source['percentage'] + (($year === 2026 && $month === 'June') ? 0 : (($periodNumber + $sourceIndex) % 3) - 1))]
+                    );
+                }
+
+                foreach ($pipelineRows as $pipelineIndex => $pipeline) {
+                    $value = $year === 2026 && $month === 'June'
+                        ? $pipeline['value']
+                        : max(12, (int) round($pipeline['value'] * (0.42 + ($periodNumber / 140))));
+
+                    DB::table('CRM_Pipeline_Overview')->updateOrInsert(
+                        ['year' => $year, 'month' => $month, 'stage' => $pipeline['stage']],
+                        ['value' => $value, 'sort_order' => $pipelineIndex + 1]
+                    );
+                }
+
+                foreach ($recentLeadTemplates as $leadIndex => $lead) {
+                    $leadDate = sprintf('%04d-%02d-%02d', $year, $index + 1, min($lead['day'], 28));
+
+                    DB::table('CRM_Recent_Leads')->updateOrInsert(
+                        ['year' => $year, 'month' => $month, 'name' => $lead['name'], 'company' => $lead['company']],
+                        ['source' => $lead['source'], 'status' => $lead['status'], 'lead_date' => $leadDate]
+                    );
+                }
+
+                foreach ($opportunityTemplates as $opportunityIndex => $opportunity) {
+                    $closeDate = sprintf('%04d-%02d-%02d', $year, $index + 1, min($opportunity['day'], 28));
+
+                    DB::table('CRM_Top_Opportunities')->updateOrInsert(
+                        ['year' => $year, 'month' => $month, 'opportunity' => $opportunity['opportunity'], 'company' => $opportunity['company']],
+                        [
+                            'value' => $opportunity['value'] + (($year === 2026 && $month === 'June') ? 0 : ($periodNumber * 180)),
+                            'stage' => $opportunity['stage'],
+                            'close_date' => $closeDate,
+                        ]
+                    );
+                }
             }
         }
 
