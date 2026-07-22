@@ -204,10 +204,11 @@ class DatabaseSeeder extends Seeder
             'November',
             'December',
         ];
+        $shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         foreach (range(2020, 2026) as $year) {
             foreach ($months as $index => $month) {
-                if ($year === 2026 && $index > 4) {
+                if ($year === 2026 && $index > 5) {
                     break;
                 }
 
@@ -329,7 +330,7 @@ class DatabaseSeeder extends Seeder
                     continue;
                 }
 
-                if ($year === 2026 && $index > 4) {
+                if ($year === 2026 && $index > 5) {
                     break;
                 }
 
@@ -360,6 +361,106 @@ class DatabaseSeeder extends Seeder
                 ]
             );
         });
+
+        $salesMonthAmounts = [2.0, 4.0, 5.6, 7.3, 6.5, 8.0, 8.3, 10.6, 8.8, 7.3, 9.4, 10.6];
+        $salesTopProducts = [
+            ['product' => 'Product A', 'sales' => 1245, 'revenue' => 24580000],
+            ['product' => 'Product B', 'sales' => 986, 'revenue' => 19520000],
+            ['product' => 'Product C', 'sales' => 745, 'revenue' => 14870000],
+            ['product' => 'Product D', 'sales' => 631, 'revenue' => 10560000],
+            ['product' => 'Product E', 'sales' => 432, 'revenue' => 7890000],
+            ['product' => 'Product F', 'sales' => 385, 'revenue' => 6420000],
+            ['product' => 'Product G', 'sales' => 301, 'revenue' => 5110000],
+        ];
+        $salesRecentOrders = [
+            ['order_no' => 'SO-2026-1054', 'customer' => 'Alpha Enterprises', 'day' => 24, 'amount' => 52400, 'status' => 'Delivered'],
+            ['order_no' => 'SO-2026-1053', 'customer' => 'Beta Industries', 'day' => 24, 'amount' => 37870, 'status' => 'Shipped'],
+            ['order_no' => 'SO-2026-1052', 'customer' => 'Gamma Solutions', 'day' => 23, 'amount' => 44300, 'status' => 'Processing'],
+            ['order_no' => 'SO-2026-1051', 'customer' => 'Delta Traders', 'day' => 23, 'amount' => 28600, 'status' => 'Delivered'],
+            ['order_no' => 'SO-2026-1050', 'customer' => 'Epsilon Corporation', 'day' => 22, 'amount' => 31450, 'status' => 'Confirmed'],
+            ['order_no' => 'SO-2026-1049', 'customer' => 'Zeta Wholesale', 'day' => 21, 'amount' => 26720, 'status' => 'Shipped'],
+            ['order_no' => 'SO-2026-1048', 'customer' => 'Orion Retail', 'day' => 20, 'amount' => 41760, 'status' => 'Processing'],
+        ];
+        $salesTopCustomers = [
+            ['customer' => 'Alpha Enterprises', 'orders' => 125, 'total_sales' => 24110000, 'outstanding' => 24500],
+            ['customer' => 'Beta Industries', 'orders' => 98, 'total_sales' => 17130000, 'outstanding' => 18700],
+            ['customer' => 'Gamma Solutions', 'orders' => 86, 'total_sales' => 15310000, 'outstanding' => 12400],
+            ['customer' => 'Delta Traders', 'orders' => 71, 'total_sales' => 9840000, 'outstanding' => 9800],
+            ['customer' => 'Epsilon Corporation', 'orders' => 65, 'total_sales' => 7880000, 'outstanding' => 7300],
+            ['customer' => 'Zeta Wholesale', 'orders' => 58, 'total_sales' => 7160000, 'outstanding' => 6900],
+            ['customer' => 'Orion Retail', 'orders' => 52, 'total_sales' => 6420000, 'outstanding' => 5300],
+        ];
+
+        foreach (range(2020, 2026) as $year) {
+            foreach ($months as $index => $month) {
+                if ($year === 2026 && $index > 5) {
+                    break;
+                }
+
+                $periodNumber = (($year - 2020) * 12) + $index + 1;
+                $isReferencePeriod = $year === 2026 && $month === 'June';
+
+                DB::table('Sales_Dashboard_Summary')->updateOrInsert(
+                    ['year' => $year, 'month' => $month],
+                    [
+                        'total_sales' => $isReferencePeriod ? 124580000 : 36000000 + ($periodNumber * 1120000) + (($index + 1) * 880000),
+                        'total_orders' => $isReferencePeriod ? 2271 : 680 + ($periodNumber * 18) + (($index + 1) * 7),
+                        'average_order_value' => $isReferencePeriod ? 54890 : 42000 + ($periodNumber * 125) + (($index + 1) * 185),
+                        'conversion_rate' => $isReferencePeriod ? 18.6 : round(8.4 + ($periodNumber * 0.11) + (($index % 4) * 0.4), 1),
+                        'return_rate' => $isReferencePeriod ? 2.3 : round(max(1.2, 4.8 - ($periodNumber * 0.03) + (($index % 3) * 0.18)), 1),
+                        'total_sales_change' => $isReferencePeriod ? 14.7 : round(5.5 + (($periodNumber + $index) % 12) * 0.8, 1),
+                        'total_orders_change' => $isReferencePeriod ? 11.1 : round(4.2 + (($periodNumber + 2) % 10) * 0.7, 1),
+                        'average_order_value_change' => $isReferencePeriod ? 6.5 : round(2.5 + (($periodNumber + 3) % 8) * 0.55, 1),
+                        'conversion_rate_change' => $isReferencePeriod ? 3.1 : round(1.4 + (($periodNumber + 1) % 6) * 0.35, 1),
+                        'return_rate_change' => $isReferencePeriod ? -0.6 : round(-1.1 + (($periodNumber + 2) % 5) * 0.2, 1),
+                    ]
+                );
+
+                foreach ($shortMonths as $monthIndex => $salesMonth) {
+                    $amount = $isReferencePeriod
+                        ? $salesMonthAmounts[$monthIndex]
+                        : round(max(1.2, $salesMonthAmounts[$monthIndex] * (0.52 + ($periodNumber / 145))), 2);
+
+                    DB::table('Sales_Over_Time')->updateOrInsert(
+                        ['year' => $year, 'month' => $month, 'sales_month' => $salesMonth],
+                        ['sales_amount' => $amount]
+                    );
+                }
+
+                foreach ($salesTopProducts as $productIndex => $product) {
+                    DB::table('Sales_Top_Products')->updateOrInsert(
+                        ['year' => $year, 'month' => $month, 'product' => $product['product']],
+                        [
+                            'sales' => $isReferencePeriod ? $product['sales'] : max(80, $product['sales'] - ((78 - $periodNumber) * (9 + $productIndex))),
+                            'revenue' => $isReferencePeriod ? $product['revenue'] : max(1200000, $product['revenue'] - ((78 - $periodNumber) * (210000 + ($productIndex * 16000)))),
+                        ]
+                    );
+                }
+
+                foreach ($salesRecentOrders as $orderIndex => $order) {
+                    DB::table('Sales_Recent_Orders')->updateOrInsert(
+                        ['year' => $year, 'month' => $month, 'order_no' => $isReferencePeriod ? $order['order_no'] : sprintf('SO-%04d-%04d', $year, 1000 + $periodNumber + $orderIndex)],
+                        [
+                            'customer' => $order['customer'],
+                            'order_date' => sprintf('%04d-%02d-%02d', $year, $index + 1, min($order['day'], 28)),
+                            'amount' => $isReferencePeriod ? $order['amount'] : max(8000, $order['amount'] - ((78 - $periodNumber) * (330 + ($orderIndex * 20)))),
+                            'status' => $order['status'],
+                        ]
+                    );
+                }
+
+                foreach ($salesTopCustomers as $customerIndex => $customer) {
+                    DB::table('Sales_Top_Customers')->updateOrInsert(
+                        ['year' => $year, 'month' => $month, 'customer' => $customer['customer']],
+                        [
+                            'orders' => $isReferencePeriod ? $customer['orders'] : max(12, $customer['orders'] - ((78 - $periodNumber) * (1 + ($customerIndex % 2)))),
+                            'total_sales' => $isReferencePeriod ? $customer['total_sales'] : max(900000, $customer['total_sales'] - ((78 - $periodNumber) * (175000 + ($customerIndex * 14000)))),
+                            'outstanding' => $isReferencePeriod ? $customer['outstanding'] : max(1200, $customer['outstanding'] - ((78 - $periodNumber) * (80 + ($customerIndex * 5)))),
+                        ]
+                    );
+                }
+            }
+        }
 
         $inventoryRows = collect([
             ['year' => 2020, 'month' => 'January', 'item_categorie' => 'Electronics', 'items' => 120, 'qty_in_hand' => 15250, 'value' => 6240000],
@@ -524,7 +625,6 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        $shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         $sourceRows = [
             ['source' => 'Website', 'percentage' => 40],
             ['source' => 'Referral', 'percentage' => 25],
